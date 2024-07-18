@@ -4,6 +4,22 @@
 Driver code which allows harmonic frequencies, normal mode eigenvectors, mode energies, etc to be parsed from a valid CRYSTAL frequency output file. 
 Needed data from user:
 1. Frequency output file
+```python
+import os
+from ParseFreqCalc import ParseFreq
+path_to_freq_file = "some_path/"
+frequency_file = "some_file.out"
+freq_calc = ParseFreq(os.join(path_to_freq_file, frequency_file), )
+
+#get modes from the file
+modes = freq_calc.modes
+#returns a dictionary of modes with integer keys, starting at 1 as convention in crystal
+info_for_mode_10 = modes[10]
+#this returns a dictionary with the following keys 'EigenValue', 'WaveNumber', 'THz', 'ActiveIR', 'Intensity', 'ActiveRaman', 'EigenVector'
+energy_in_wavnum = info_for_mode_10['WaveNumber']
+mode_10_eigenvector = info_for_mode_10['EigenVector'] #NumPy array with shape (Atoms in Unit Cell X 3)
+
+```
 
 ## ParseCalcVSCF.py 
 Easily obtains coupled and uncoupled 3rd and 4th order force constants from a CRYSTAL VSCF output file. Can also write VIBPOT.DAT files from the parsed force constants. 
